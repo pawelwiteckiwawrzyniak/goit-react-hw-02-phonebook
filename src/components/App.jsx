@@ -21,6 +21,12 @@ export class App extends Component {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
     const id = nanoid();
+
+    const listOfContacts = this.state.contacts.map(contacts => contacts.name);
+
+    if (listOfContacts.find(contact => contact === name)) {
+      return alert(name + ' is already in your contacts!');
+    }
     this.setState({
       contacts: [...this.state.contacts, { name, id, number }],
     });
