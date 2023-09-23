@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { ContactForm } from './ContactForm';
-import { ContactList } from './ContactList';
-import { ContactFilter } from './ContactFilter';
+import { ContactForm } from './ContactForm/ContactForm';
+import { ContactList } from './ContactList/ContactList';
+import { ContactFilter } from './ContactFilter/ContactFilter';
 
 export class App extends Component {
   state = {
@@ -28,7 +28,7 @@ export class App extends Component {
       return alert(name + ' is already in your contacts!');
     }
     this.setState({
-      contacts: [...this.state.contacts, { name, id, number }],
+      contacts: [...this.state.contacts, { id, name, number }],
     });
   };
 
@@ -37,14 +37,17 @@ export class App extends Component {
     this.setState({ filter: filteredName.toLowerCase() });
   };
 
+  handleDelete = event => {
+    const id = event.currentTarget.id;
+    const index = this.state.contacts.findIndex(contact => contact.id === id);
+    const contacts = this.state.contacts;
+    contacts.splice(index, 1);
+    this.setState({ contacts: contacts });
+  };
+
   render() {
     return (
-      <div
-        style={{
-          fontSize: 40,
-          color: '#010101',
-        }}
-      >
+      <div>
         <h1>Phonebook</h1>
         <ContactForm handleSubmit={this.handleSubmit}></ContactForm>
         <h2>Contacts</h2>
@@ -52,6 +55,7 @@ export class App extends Component {
         <ContactList
           contacts={this.state.contacts}
           filterPhrase={this.state.filter}
+          handleDelete={this.handleDelete}
         ></ContactList>
       </div>
     );

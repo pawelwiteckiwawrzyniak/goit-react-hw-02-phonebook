@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import css from './ContactList.module.css';
 
-export const ContactList = ({ contacts, filterPhrase }) => {
+export const ContactList = ({ contacts, filterPhrase, handleDelete }) => {
   const handleFilteredList = () => {
     let filteredNames = [];
     contacts.forEach(contact => {
@@ -13,20 +14,36 @@ export const ContactList = ({ contacts, filterPhrase }) => {
 
   if (filterPhrase === '') {
     return (
-      <ul>
+      <ul className={css.contactList}>
         {contacts.map(item => (
-          <li key={item.id}>
+          <li key={item.id} className={css.contactList__item}>
             {item.name}: {item.number}
+            <button
+              type="button"
+              onClick={handleDelete}
+              id={item.id}
+              className={css.button}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
     );
   } else {
     return (
-      <ul>
+      <ul className={css.contactList}>
         {handleFilteredList().map(item => (
-          <li key={item.id}>
+          <li key={item.id} className={css.contactList__item}>
             {item.name}: {item.number}
+            <button
+              type="button"
+              onClick={handleDelete}
+              id={item.id}
+              className={css.button}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
@@ -43,4 +60,5 @@ ContactList.propTypes = {
     })
   ),
   filterPhrase: PropTypes.string,
+  handleDelete: PropTypes.func,
 };
