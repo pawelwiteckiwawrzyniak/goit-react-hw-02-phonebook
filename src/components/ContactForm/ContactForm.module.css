@@ -22,3 +22,7 @@
   border-radius: 5px;
   padding: 5px;
 }
+
+.form__submitButton:active {
+  opacity: 50%;
+}

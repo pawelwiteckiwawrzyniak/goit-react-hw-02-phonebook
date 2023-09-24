@@ -18,8 +18,8 @@ export class App extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
-    const name = form.elements.name.value;
-    const number = form.elements.number.value;
+    let name = form.elements.name.value;
+    let number = form.elements.number.value;
     const id = nanoid();
 
     const listOfContacts = this.state.contacts.map(contacts => contacts.name);
@@ -30,6 +30,8 @@ export class App extends Component {
     this.setState({
       contacts: [...this.state.contacts, { id, name, number }],
     });
+    form.elements.name.value = '';
+    form.elements.number.value = '';
   };
 
   handleFilter = event => {
